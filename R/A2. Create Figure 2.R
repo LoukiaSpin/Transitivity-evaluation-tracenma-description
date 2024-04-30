@@ -10,14 +10,19 @@
 #*******************************************************************************
 
 
-#' Note: Adding also a box plot on the number of characteristics regardless of
-#' characteristic subtype would make the Figure S1 cluttered; hence, it was omitted.
+
+## Load the developmental version of tracenma
+#remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
+
 
 
 ## Load libraries ----
 list.of.packages <- c("tracenma", "plyr", "dplyr", "ggplot2", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages)
 
+
+#' Note: Adding also a box plot on the number of characteristics regardless of
+#' characteristic subtype would make the Figure S1 cluttered; hence, it was omitted.
 
 
 ## Load tracenma dataset ----

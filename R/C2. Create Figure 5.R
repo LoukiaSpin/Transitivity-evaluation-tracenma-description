@@ -13,6 +13,11 @@
 
 
 
+## Load the developmental version of tracenma
+#remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
+
+
+
 ## Load libraries ----
 list.of.packages <- c("tracenma", "plyr", "ggplot2")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages)
