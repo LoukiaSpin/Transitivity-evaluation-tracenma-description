@@ -32,6 +32,9 @@ type_chars <-
 # Merge the ethnicities into the same *one* label
 type_chars[[177]] <- type_chars[[177]][c(-4, -5), ]
 
+
+
+## Summarising the number of characteristics ----
 # Distribution of number of characteristics (regardless of type) across datasets
 num_chars <- sapply(type_chars, function(x) length(unlist(x[, 1])))
 distr_chars <- as.matrix(summary(num_chars))
@@ -75,7 +78,7 @@ num_datasets$perc <- round((num_datasets$num / 217) * 100, 0)
 num_datasets$type <- factor(num_datasets$type, levels = c("All types", "Clinical", "Demographic", "Methodological"))
 
 # Box plots with integrated dot
-tiff("./30_Analysis & Results/Figure 1.tiff",
+tiff("./Figures/Figure 1.tiff",
      height = 20,
      width = 37,
      units = "cm",
