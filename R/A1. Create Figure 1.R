@@ -10,7 +10,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 

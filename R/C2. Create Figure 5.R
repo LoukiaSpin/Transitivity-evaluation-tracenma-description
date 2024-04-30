@@ -2,9 +2,9 @@
 #*
 #*
 #*                     Creating Figure 5 of the manuscript
-#*   (A) Bar plots on frequency of all combinations of characteristic subtypes
+#*   (A) Commonness of unique combinations among characteristic subtypes
 #*       for datasets that include all three characteristic types;
-#*   (B) Commonness of unique combinations among characteristic subtypes
+#*   (B) Bar plots on frequency of all combinations of characteristic subtypes
 #*       for datasets that include all three characteristic types
 #*
 #* Author: Loukia M. Spineli
@@ -13,7 +13,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
@@ -31,7 +31,6 @@ pmid_index <- index$PMID
 # List of data-frames on the characteristic types and subtypes
 type_chars <-
   lapply(pmid_index, function(x) get.dataset(pmid = x, show.type = TRUE)$Characteristics_index)
-
 
 # Number of characteristics per subtype in each dataset
 chars_subtype_dataset <- lapply(type_chars, function(x) as.data.frame(table(x[, 3])))
@@ -51,24 +50,27 @@ id_datasets_alltypes <- which(unlist(lapply(chars_type_vector, function(x) lengt
 # Unique characteristic subtypes in each dataset
 chars_subtype_unique <- lapply(type_chars, function(x) as.character(as.data.frame(table(x[, 3]))[, 1]))
 
-# Keeping only those with the id number as retrieved above (id_datasets_alltypes)
+# Keeping only those datasets with the id number as retrieved above (id_datasets_alltypes)
 chars_subtype_unique_restrict <- chars_subtype_unique[id_datasets_alltypes]
+length(chars_subtype_unique_restrict) # 152 datasets
 
 # Vector of characteristic subtypes
 unique_subtypes <- sort(unique(unlist(chars_subtype_unique)))
 
-# List of *possible* combinations of characteristic subtypes # 1023 possible combinations among the 10 subtypes
+# List of *possible* combinations of characteristic subtypes
 possible_combinations <- do.call("c", lapply(seq_along(unique_subtypes), function(i) combn(unique_subtypes, i, FUN = list)))
+length(possible_combinations) # 1023 possible combinations among the 10 subtypes
 
 # Frequency of each unique *observed* combination
-num_unique_comb <- as.data.frame(table(unlist(lapply(chars_subtype_unique_restrict, paste, collapse = " & ")))) # 93 observed combinations
+num_unique_comb <- as.data.frame(table(unlist(lapply(chars_subtype_unique_restrict, paste, collapse = " & "))))
 colnames(num_unique_comb)[1] <- "combination"
 num_unique_comb[order(num_unique_comb$Freq, decreasing = TRUE), ]
+dim(num_unique_comb)[1] # 65 observed unique combinations
 
 # Number of combinations appearing only once in the database
 length(which(num_unique_comb$Freq == 1)) # 37 (37/65 = 57%)
 
-# Summary of frequency the remaining 65 - 37 combinations appear
+# Summary of frequency of the remaining 28 (=65-37) combinations appear
 summary(num_unique_comb$Freq[which(num_unique_comb$Freq > 1)])
 
 # *Observed* combinations
@@ -88,9 +90,8 @@ num_subset_comb_dataset$perc <- round((num_subset_comb_dataset$num / length(obse
 num_subset_comb_dataset$type <- rep(c("Clinical", "Demographic", "Methodological"), c(3, 3, 4))
 num_subset_comb_dataset$subtype <- revalue(num_subset_comb_dataset$subtype, c("Intervention" = "Treatment"))
 
-
-# Bar plot
-tiff("./30_Analysis & Results/Figure 5.tiff",
+# Grouped bar plot (152 datasets)
+tiff("./Figures/Figure 5.tiff",
      height = 20,
      width = 37,
      units = "cm",

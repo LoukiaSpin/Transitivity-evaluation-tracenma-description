@@ -10,7 +10,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
@@ -34,7 +34,7 @@ chars_type_dataset <- lapply(type_chars, function(x) as.data.frame(table(x[, 2])
 
 
 
-## Commonness of combinations among characteristic types ---
+## Commonness of combinations among characteristic types ----
 # Keep the first column with the names, turning each submatrix into vector
 chars_type_vector <- lapply(chars_type_dataset, function(x) as.character(x[, 1]))
 
@@ -46,6 +46,7 @@ unique_types <- sort(unique(unlist(chars_type_vector)))
 
 # List of *possible* combinations of characteristic types
 possible_combinations <- do.call("c", lapply(seq_along(unique_types), function(i) combn(unique_types, i, FUN = list)))
+length(possible_combinations) # 7 possible combinations
 
 # *Unobserved* combinations in the database
 unobserved_comb <- unlist(lapply(setdiff(possible_combinations, chars_type_vector[!duplicated(chars_type_vector)]),
@@ -66,7 +67,7 @@ num_comb_dataset$comb_type <- factor(num_comb_dataset$comb_type, levels = c("All
 num_comb_dataset$perc <- round((num_comb_dataset$num / 217) * 100, 1)
 
 # Bar plot
-tiff("./30_Analysis & Results/Figure 4.tiff",
+tiff("./Figures/Figure 4.tiff",
      height = 20,
      width = 37,
      units = "cm",

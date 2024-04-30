@@ -10,7 +10,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
@@ -55,26 +55,20 @@ find_char <- lapply(1:length(collect_datasets), function(x) collect_datasets[[x]
 type_char <- lapply(1:length(collect_datasets), function(x) unlist(collect_datasets[[x]]$Characteristics_index[id_char[[x]], 3]))
 
 
+
 ## Prepare the datasets for ggplot2 ----
-#' SOS: The results on % total missing data differ from the empirical study on dissimilarities,
-#' because there I did *not* consider treatment-related characteristics; hence, I considered
-#' 209 datasets, leading to less datasets with missing data as compared to the present study! :-)
-
-# A1: Number of characteristics with at least one missing data across the datasets
-num_chars_with_NA <- unlist(lapply(num_NA_column, function(x) length(rownames(x))))
-summary(num_chars_with_NA[num_chars_with_NA > 0])
-length(num_chars_with_NA[num_chars_with_NA > 0]) # 182 datasets with at least one characteristics with missing data
-
-# A2: Percentage of characteristics with at least one missing data across the datasets
-perc_chars_with_NA <- unlist(lapply(1:length(collect_datasets), function(x) round((num_chars_with_NA[[x]] / dim(collect_datasets[[x]]$Dataset[, -c(1:5)])[2] ) * 100, 1)))
-summary(perc_chars_with_NA[perc_chars_with_NA > 0])
-
-# B1: Percentage of missing data across datasets
+# A1: Percentage of missing data across datasets
 perc_NA_total <- unlist(lapply(collect_datasets, function(x) round(length(which(is.na(x$Dataset[, -c(1:5)]) == TRUE)) / prod(dim(x$Dataset[, -c(1:5)])) * 100, 1)))
 length(perc_NA_total[perc_NA_total > 0]) # 182 datasets with missing data
 summary(perc_NA_total[perc_NA_total > 0])
-#Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
-#0.200   2.600   7.000   8.677  12.500  32.900
+
+# B1: Number of characteristics with at least one missing data across the datasets
+num_chars_with_NA <- unlist(lapply(num_NA_column, function(x) length(rownames(x))))
+summary(num_chars_with_NA[num_chars_with_NA > 0])
+
+# B2: Percentage of characteristics with at least one missing data across the datasets
+perc_chars_with_NA <- unlist(lapply(1:length(collect_datasets), function(x) round((num_chars_with_NA[[x]] / dim(collect_datasets[[x]]$Dataset[, -c(1:5)])[2] ) * 100, 1)))
+summary(perc_chars_with_NA[perc_chars_with_NA > 0])
 
 # C1: Number of characteristics per characteristic *type*
 num_chars_type <- lapply(collect_datasets, function(x) length(unlist(x$Characteristics_index[, 3])))
@@ -123,9 +117,8 @@ num_datasets$type <- factor(num_datasets$type, levels = c("All types", "Clinical
 
 
 
-## Obtain box plots ----
-# Box plots with integrated dot
-tiff("./30_Analysis & Results/Figure 6.tiff",
+## Obtain box plots with integrated dots ----
+tiff("./Figures/Figure 6.tiff",
      height = 20,
      width = 37,
      units = "cm",

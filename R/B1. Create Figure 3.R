@@ -10,12 +10,12 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
 
-## Load libraries
+## Load libraries ----
 list.of.packages <- c("tracenma", "plyr", "ggplot2", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages)
 
@@ -33,14 +33,14 @@ subtype_chars <-
 
 
 
-## Grouped barplot of subtype by type ----
+## Grouped barplot of frequency of datasets by subtypes ----
 # Prepare dataset
 dataset_plot <- as.data.frame(table(subtype_chars))
 dataset_plot$type <- rep(c("Clinical", "Demographic", "Methodological"), c(3, 3, 4))
 dataset_plot$subtype_chars <- revalue(dataset_plot$subtype_chars, c("Intervention" = "Treatment"))
 
 # Create Bar plot
-tiff("./30_Analysis & Results/Figure 3.tiff",
+tiff("./Figures/Figure 3.tiff",
      height = 20,
      width = 37,
      units = "cm",

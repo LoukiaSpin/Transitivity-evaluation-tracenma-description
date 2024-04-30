@@ -11,7 +11,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
@@ -22,7 +22,7 @@ lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages)
 
 
 #' Note: Adding also a box plot on the number of characteristics regardless of
-#' characteristic subtype would make the Figure S1 cluttered; hence, it was omitted.
+#' characteristic subtype would make the Figure 2 cluttered; hence, it was omitted.
 
 
 ## Load tracenma dataset ----
@@ -89,8 +89,8 @@ distr_metho_subtype[is.element(distr_metho_subtype$statistic, c("q1", "q3")) & d
 
 
 
-## % of datasets per number of characteristics for each subtype ----
-# Number of characteristic per subtype in each dataset
+## % of datasets including at least one characteristic for each subtype ----
+# Number of characteristics per subtype in each dataset
 num_chars_subtype <- lapply(subtype_chars, function(x) as.data.frame(table(x[, 3])))
 
 # Turn into a data-frame
@@ -265,9 +265,8 @@ boxplot_metho <-
         legend.title = element_text(size = 14, face = "bold"),
         legend.text = element_text(size = 14))
 
-
 # Bring all together
-tiff("./30_Analysis & Results/Figure 2.tiff",
+tiff("./Figures/Figure 2.tiff",
      height = 20,
      width = 37,
      units = "cm",

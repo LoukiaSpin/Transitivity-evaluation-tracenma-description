@@ -2,7 +2,7 @@
 #*
 #*
 #*                       Creating Supplementary Figure S1
-#*         (Bar plot on dataset frequency per characteristic frequency)
+#*         (Line plot on dataset frequency per characteristic frequency)
 #*
 #* Author: Loukia M. Spineli
 #* Date: April 2024
@@ -10,12 +10,12 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
 
-## Load libraries
+## Load libraries ----
 list.of.packages <- c("tracenma", "ggplot2", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages)
 
@@ -48,7 +48,7 @@ num_chars_demo <- sapply(type_chars, function(x) length(which(x[, 2] == "Demogra
 # Number of extracted *Methodological* characteristics per dataset
 num_chars_metho <- sapply(type_chars, function(x) length(which(x[, 2] == "Methodological")))
 
-# Number of datasets per number of extracted characterstics based on their type
+# Number of datasets per number of extracted characteristics based on their type
 datasets_char <- rbind(data.frame(table(num_chars[num_chars > 0])),
                        data.frame(table(num_chars_clin[num_chars_clin > 0])),
                        data.frame(table(num_chars_demo[num_chars_demo > 0])),
@@ -63,8 +63,8 @@ datasets_char$num_chars <- factor(datasets_char$num_chars, levels = as.character
 
 
 
-## Bar plot ----
-tiff("./30_Analysis & Results/Figure S1.tiff",
+## Line plot ----
+tiff("./Figures/Figure S1.tiff",
      height = 20,
      width = 37,
      units = "cm",

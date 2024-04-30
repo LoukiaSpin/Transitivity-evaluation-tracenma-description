@@ -10,7 +10,7 @@
 
 
 
-## Load the developmental version of tracenma
+## Load the development version of tracenma
 #remotes::install_github("https://github.com/LoukiaSpin/tracenma.git", force = TRUE)
 
 
@@ -57,26 +57,16 @@ subtype_char <- lapply(1:length(collect_datasets), function(x) unlist(collect_da
 
 
 ## Prepare the datasets for ggplot2 ----
-#' SOS: The results on % total missing data differ from the empirical study on dissimilarities,
-#' because there I did *not* consider treatment-related characteristics; hence, I considered
-#' 209 datasets, leading to less datasets with missing data as compared to the present study! :-)
-
-# A1: Number of characteristics with at least one missing data across the datasets
-num_chars_with_NA <- unlist(lapply(num_NA_column, function(x) length(rownames(x))))
-
-# A2: Percentage of characteristics with at least one missing data across the datasets
-perc_chars_with_NA <- unlist(lapply(1:length(collect_datasets), function(x) round((num_chars_with_NA[[x]] / dim(collect_datasets[[x]]$Dataset[, -c(1:5)])[2] ) * 100, 1)))
-
-# B1: Number of characteristics per characteristic *subtype*
+# Number of characteristics per characteristic *subtype*
 num_chars_subtype <- lapply(collect_datasets, function(x) length(unlist(x$Characteristics_index[, 3])))
 
-# B2: Number of missing characteristics per characteristic *subtype*
+# Number of missing characteristics per characteristic *subtype*
 num_chars_NA_subtype <- lapply(subtype_char, function(x) data.frame(table(x)))
 
-# B3: Percentage of missing characteristics per characteristic *subtype*
-perc_chars_NA_subtype <- lapply(1:length(collect_datasets), function(x)  num_chars_NA_subtype[[x]]$Freq / num_chars_subtype[[x]])
+# Percentage of missing characteristics per characteristic *subtype*
+perc_chars_NA_subtype <- lapply(1:length(collect_datasets), function(x) num_chars_NA_subtype[[x]]$Freq / num_chars_subtype[[x]])
 
-# B4: Data-frame with the number and % of characteristics with at least one missing data per *subtype*
+# Data-frame with the number and % of characteristics with at least one missing data per *subtype*
 chars_NA_subtype <- rbind(data.frame(do.call(rbind, lapply(subtype_char, function(x) data.frame(table(x)))),
                                      round(unlist(perc_chars_NA_subtype) *100, 1)) )
 colnames(chars_NA_subtype) <- c("subtype", "number", "perc")
@@ -276,7 +266,8 @@ plot_metho <-
         axis.title = element_text(size = 14, face = "bold"),
         legend.position = "none")
 
-tiff("./30_Analysis & Results/Figure S2.tiff",
+# Bring together
+tiff("./Figures/Figure S2.tiff",
      height = 20,
      width = 37,
      units = "cm",
