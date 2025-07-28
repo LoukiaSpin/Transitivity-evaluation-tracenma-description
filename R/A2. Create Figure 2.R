@@ -181,8 +181,9 @@ boxplot_clin <-
             inherit.aes = FALSE) +
   scale_color_manual(values = c("#1B9E77", "#D95F02", "#7570B3")) +
   labs(y = "Number of characteristics",
-       x = "Clinical characteristic subtypes",
+       x = "",
        color =  "Characteristic subtypes") +
+  ggtitle("Clinical characteristic subtypes") +
   ylim(0, 22) +
   theme_classic() +
   theme(plot.title = element_text(size = 14, face = "bold"),
@@ -254,8 +255,9 @@ boxplot_metho <-
             inherit.aes = FALSE) +
   scale_color_manual(values = c("#E7298A", "#66A61E", "#E6AB02", "#A6761D")) +
   labs(y = " ",
-       x = "Methodological characteristic subtypes",
+       x = "",
        color =  "Characteristic subtypes") +
+  ggtitle("Methodological characteristic subtypes") +
   ylim(0, 22) +
   theme_classic() +
   theme(plot.title = element_text(size = 14, face = "bold"),

@@ -21,7 +21,7 @@ library("tracenma")
 pmid_index <- index$PMID
 
 # Load all 217 datasets as data-frames
-datasets <- lapply(pmid_index, function(x) get.dataset(pmid = x)$Dataset)
+datasets <- lapply(pmid_index, function(x) as.data.frame(get.dataset(pmid = x)$Dataset))
 
 # Data-frames on the characteristic types and subtypes
 type_subtype_chars <-
